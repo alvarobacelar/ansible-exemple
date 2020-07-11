@@ -1,0 +1,11 @@
+lista diretorios:
+
+{% for i in dir %}
+ {{ i }}
+{% endfor %}
+
+{% if ansible_os_family == "RedHat" %}
+Paulo é feio
+{% else %}
+Paulo é viado
+{% endif %}

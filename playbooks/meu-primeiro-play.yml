@@ -1,0 +1,5 @@
+---
+- name: Executando meu primeiro playbook
+  hosts: server
+  roles:
+    - webapp

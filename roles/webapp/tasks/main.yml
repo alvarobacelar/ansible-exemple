@@ -1,0 +1,45 @@
+---
+# tasks file for webapp
+- name: Instalando o pacote no servidor CentOS
+  yum:
+    name: "{{ pkg }}"
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Instalando o pacote no servidor Ubuntu
+  apt:
+    name: "{{ pkg }}"
+    update_cache: true
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Debugando
+  debug:
+    msg: "Instando pacote {{ pkg }} no servidor {{ ansible_hostname }}"
+
+- name: listando diretorios
+  shell: "ls {{ item }}"
+  register: ls
+  with_items:
+    - "{{ dir }}"
+
+- name: debug
+  debug:
+    msg: "{{ item.stdout }}"
+  with_items:
+    - "{{ ls.results }}"
+
+- name: Escrevendo o arquivo de template
+  template:
+    src: paulo.j2
+    dest: /home/paulo.txt
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+  notify:
+    - reload nginx
+
+- name: Excrevendo o arquivo estático
+  copy:
+   src: paulo.txt
+   dest: /home/paulo2.txt

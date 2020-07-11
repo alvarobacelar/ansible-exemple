@@ -1,0 +1,11 @@
+---
+# handlers file for webapp
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: ansible_os_family == "RedHat"
+
+- name: reload nginx
+  shell: "nginx -s reload"
+  when: ansible_os_family == "RedHat"
