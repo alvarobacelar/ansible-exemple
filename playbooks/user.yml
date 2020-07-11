@@ -1,0 +1,20 @@
+---
+- name: user add
+  hosts: app
+  vars:
+    usuarios:
+      - name: paulo
+        group: root
+        status: present
+      - name: kalil
+        group: root
+        status: absent
+  tasks:
+    - name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+      user:
+        name: "{{ item.name }}"
+        shell: /bin/bash
+        groups: "{{ item.group }}"
+        state: "{{ item.status }}"
+      with_items:
+        - "{{ usuarios }}"
